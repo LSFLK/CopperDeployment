@@ -26,52 +26,52 @@ You can use deploy shell script to start server easily.
 
 Enter mysql database name:
 
-Ex : copper
+- Ex : copper
 
 Enter mysql database password:
 
-Ex : copper
+- Ex : copper
 
 Your domain must contain 3 parts. (Eg: part1.part2.part3)
 Enter the first part of domain:
 
-Ex : copper
+- Ex : copper
 
 Enter the second part of domain:
 
-Ex : test
+- - Ex : test
 
 Enter the third part of domain:
 
-Ex : lk
+- Ex : lk
 
 Enter LDAP admin password:
 
-Ex : admin
+- Ex : admin
 
 Enter LDAP readonly user name:
 
-Ex : raa
+- Ex : raa
 
 Enter LDAP readonly user password:
 
-Ex : raa
+- Ex : raa
 
 Enter organization name
 
-Ex : lsf
+- Ex : lsf
 
 Enter password for spam filter (RspamD)
 
-Ex : spam
+- Ex : spam
 
 ## Testing the server
 
 ### Testing phpldapadmin user management
 
-    URL :https://localhost:4433
+    URL: https://localhost:4433
     // Hear, read only user name and pasword should be provided for cn.
-    Ex: username : cn=readonly,dc=copper,dc=opensource,dc=lk
+    Ex: username : cn=readonly,dc=<domain_part1>,dc=<domain_part2>,dc=<domain_part3>
         password : readonlypassword
 
     - Once successully loged in then you have to import some test users creation file  (ldap.ldif).
@@ -81,7 +81,7 @@ Ex : spam
 ### Testing groupoffice 
 
 
-     URL :http://localhost:8004
+     URL: http://localhost:8004
 
      You will see the installation page of the groupoffice package.
      First create the admin user and start installation.
@@ -94,13 +94,13 @@ Ex : spam
 
     RSPAMD is the spam filtering service in this email solution.
 
-    URL :http://localhost:11334/
+    URL: http://localhost:11334/
 
     - Password : <password provided at installation step>
     
 ### Connectiong Group Offcie with LDAP server user base.
  
- Please reffere wiki page "Group Office LDAP configuration" for further information.
+ Please reffere wiki page [Group Office LDAP configuration](https://github.com/LSFLK/Copper/wiki/Group-Office-LDAP-configuration) for further information.
  
     
 ### Please do not forget to reset default passwords after configuring email server
