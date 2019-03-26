@@ -18,6 +18,7 @@ You can use deploy shell script to start server easily.
 ## Start the deployment
     '''
         sh deploy.sh
+        
     '''
 
 ## You may have to provide following informaiton while the installation process is going on.
