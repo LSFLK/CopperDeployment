@@ -25,11 +25,19 @@ You can use deploy shell script to start server easily.
 
 Enter mysql database name:
 
+<<<<<<< HEAD:k8s/README.md
+- Eg: copper
+
+Enter mysql database password:
+
+- Eg: copper
+=======
 - Ex : copper
 
 Enter mysql database password:
 
 - Ex : copper
+>>>>>>> 1d50a0a148d084a55b3165ba0c7a3b0845b34b17:README.md
 
 Your domain must contain 3 parts. (Eg: part1.part2.part3)
 Enter the first part of domain:
@@ -42,6 +50,29 @@ Enter the second part of domain:
 
 Enter the third part of domain:
 
+<<<<<<< HEAD:k8s/README.md
+- Eg: lk
+
+Enter LDAP admin password:
+
+- Eg: admin
+
+Enter LDAP readonly user name:
+
+- Eg: raa
+
+Enter LDAP readonly user password:
+
+- Eg: raa
+
+Enter organization name
+
+- Eg: lsf
+
+Enter password for spam filter (RspamD)
+
+- Eg: spam
+=======
 - Ex : lk
 
 Enter LDAP admin password:
@@ -63,6 +94,7 @@ Enter organization name
 Enter password for spam filter (RspamD)
 
 - Ex : spam
+>>>>>>> 1d50a0a148d084a55b3165ba0c7a3b0845b34b17:README.md
 
 ## Testing the server
 
