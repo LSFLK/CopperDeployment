@@ -1,0 +1,206 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: "email"
+  namespace: copper
+spec:
+  type: LoadBalancer
+  selector:
+    app: email
+  ports:
+    #- protocol: "TCP"
+    #  port: 25
+    #  targetPort: 25
+    - protocol: TCP
+      port: 25
+      targetPort: 25
+      name: smtp
+      #nodePort: 30025
+    - protocol: TCP
+      port: 143
+      targetPort: 143
+      name: imap
+      #nodePort: 30143
+    - protocol: TCP
+      port: 587
+      targetPort: 587
+      name: submission
+    - protocol: TCP
+      port: 4190
+      targetPort: 4190
+      name: sieve
+    - protocol: TCP
+      port: 11334
+      targetPort: 11334
+      name: rspamd
+      #nodePort: 31334
+  #type: NodePort
+---        
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: email
+  namespace: copper
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: email
+        track: stable
+    spec:
+      containers:
+        - name: email
+          #image: emailserver
+          #image: tharangarajapaksha/emailserver
+          image: lsflk/copper:emailserver
+          imagePullPolicy: Always
+          #imagePullPolicy: Never
+          #command: ["/bin/sh"]
+          #args: ["-c", "service postfix start"]
+          #args: ["-c", "while true; do echo hello; sleep 10;done"]
+          # new additon
+          #envFrom:
+          #   secretRef:
+          #     name: email-secret
+          env: 
+             - name: TELEGRAF_VERSION
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: TELEGRAF_VERSION
+             - name: MYSQL_PASSWORD
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: MYSQL_PASSWORD
+             - name: MYSQL_DATABASE
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: MYSQL_DATABASE
+             - name: EMAIL
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: EMAIL
+             - name: HOSTNAME
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: HOSTNAME
+             - name: FQDN
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: FQDN
+             - name: DOMAIN
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: DOMAIN
+             - name: REDIS_HOST
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: REDIS_HOST
+             - name: REDIS_PORT
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: REDIS_PORT
+             - name: DEBUG
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: DEBUG
+             - name: RSPAMD_PASSWORD
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: RSPAMD_PASSWORD
+             - name: CN
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: CN
+             - name: DC1
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: DC1
+             - name: DC2
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: DC2
+             - name: DC3
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: DC3
+             - name: ORGNIZATION
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: ORGNIZATION
+             - name: RO
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: RO
+             - name: ROPASS
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: ROPASS
+             - name: OU
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: OU
+             - name: LDAP_HOST_IP
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: LDAP_HOST_IP
+             - name: KEY_PATH
+               valueFrom:
+                  secretKeyRef:
+                     name: email-secret
+                     key: KEY_PATH
+          ports:
+            - name: submission
+              containerPort: 587
+            - name: imap
+              containerPort: 143
+            - name: smtp
+              containerPort: 25
+            - name: seive
+              containerPort: 4190
+            - name: rspamd
+              containerPort: 11334
+            - name: health
+              containerPort: 26
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "service rsyslog start 2> /dev/null || true && service postfix start 2> /dev/null || true && service dovecot restart 2> /dev/null || true && service rspamd start 2> /dev/null || true"]
+                #command: ["/bin/sh", "-c", "service postfix start"]
+                #command: ["/bin/sh", "-c", "pod_start.sh"]
+                #command: ['/bin/sh', 'pod_start.sh']
+          #lifecycle:
+            #postStart:
+              #exec:
+                #command: ["/bin/sh"]
+                #args: ["-c", "service postfix start"]
+          resources:
+            limits:
+              #cpu: 0.5
+              #memory: "500Mi"
+              cpu: 600m # ~6/10th of a core
+              memory: "400Mi" # 500 Mebibytes 
+      #command: ["/bin/sh"]
+      #  args: ["-c", "service postfix start"]  
+  
+              
