@@ -17,8 +17,7 @@ You can use deploy shell script to start server easily.
 
 ## Start the deployment
     '''
-        sh deploy.sh
-        
+        sh deploy.sh 
     '''
 
 ## You may have to provide following informaiton while the installation process is going on.
@@ -35,11 +34,11 @@ Enter mysql database password:
 Your domain must contain 3 parts. (Eg: part1.part2.part3)
 Enter the first part of domain:
 
-- Ex : copper
+- Eg : copper
 
 Enter the second part of domain:
 
-- - Ex : test
+- Eg : test
 
 Enter the third part of domain:
 
